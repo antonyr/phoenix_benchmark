@@ -4,11 +4,9 @@ defmodule PhoenixBenchmark.BenchmarkController do
   use PhoenixBenchmark.Web, :controller
 
   def index(conn, _params) do
-    :ibrowse.set_dest(Dotenv.get("API_SERVER"), 80, [{:max_sessions, 1000},
-                                             {:max_pipeline_size, 5}])
     async_output = [&detectors/0, &app_search/0, &search_inside/0]
       |> Enum.map(&Task.async(&1))
-      |> Enum.map(&Task.await(&1, 10000))
+      |> Enum.map(&Task.await(&1, 100000))
       |> Enum.map(&Poison.decode(&1))
       |> Enum.map(&get_response_time(&1))
       |> List.flatten
@@ -33,7 +31,7 @@ defmodule PhoenixBenchmark.BenchmarkController do
   end
 
   defp make_sync_call(path) do
-    %HTTPotion.Response{body: body, headers: _headers} = HTTPotion.get "#{Dotenv.get("API_SERVER")}/#{path}", timeout: 100000
+    {:ok, %HTTPoison.Response{body: body, headers: _headers, status_code: _status}} = HTTPoison.get "#{Dotenv.get("API_SERVER")}/#{path}", timeout: 1000000, recv_timeout: 100000
     body
   end
 

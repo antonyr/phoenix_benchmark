@@ -17,7 +17,7 @@ defmodule PhoenixBenchmark.Mixfile do
   # Type `mix help compile.app` for more information.
   def application do
     [mod: {PhoenixBenchmark, []},
-     applications: [:phoenix, :cowboy, :logger, :gettext, :httpoison, :dotenv, :httpotion]]
+     applications: [:phoenix, :cowboy, :logger, :gettext, :httpoison, :dotenv]]
   end
 
   # Specifies which paths to compile per environment.
@@ -31,11 +31,10 @@ defmodule PhoenixBenchmark.Mixfile do
     [{:phoenix, "~> 1.1.4"},
      {:gettext, "~> 0.9"},
      {:cowboy, "~> 1.0"},
-     {:httpoison, "~> 0.8.0"},
      {:poison, "~> 2.1.0"},
      {:dotenv, "~> 2.0.0"},
      {:json,   "~> 0.3.0"},
-     {:httpotion, "~> 2.2.0"}
+     {:httpoison, "~> 0.8.0"}
    ]
   end
 end
