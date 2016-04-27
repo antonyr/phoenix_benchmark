@@ -1,4 +1,4 @@
-defmodule Detectors do
+defmodule AppSearch do
   use HTTPoison.Base
 
   def process_url(url) do
@@ -6,7 +6,10 @@ defmodule Detectors do
   end
 
   def process_response_body(body) do
-    responseTime = Poison.decode(body) |> elem(1) |> Map.get("responseTime")    
+    responseTime = body
+      |> Poison.decode 
+      |> elem(1) 
+      |> Map.get("searchTime")
     %{responseTime: responseTime}
   end
 end
